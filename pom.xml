@@ -147,6 +147,36 @@
                     </mappings>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>2.11</version>
+                <configuration>
+                    <header>com/mycila/maven/plugin/license/templates/GPL-3.txt</header>
+                    <properties>
+                        <owner>Tom Saunders</owner>
+                        <email>tom@paradoxic.al</email>
+                    </properties>
+                    <excludes>
+                        <exclude>**/pom.xml</exclude>
+                        <exclude>LICENSE</exclude>
+                        <exclude>**/README.md</exclude>
+                        <exclude>src/deb/**</exclude>
+                        <exclude>src/test/resources/**</exclude>
+                        <exclude>src/main/resources/**</exclude>
+                    </excludes>
+                </configuration>
+                <executions>
+                <execution>
+                    <id>check-license</id>
+                    <phase>verify</phase>
+                    <goals>
+                        <goal>check</goal>
+                    </goals>
+                </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 </project>
