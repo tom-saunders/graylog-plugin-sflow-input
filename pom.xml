@@ -13,8 +13,8 @@
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
-    <description>Graylog ${project.artifactId} plugin.</description>
-    <url>https://www.graylog.org</url>
+    <description>A Graylog sFlow input plugin.</description>
+    <inceptionYear>2016</inceptionYear>
 
     <developers>
         <developer>
@@ -36,6 +36,8 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <graylog.version>2.0.2</graylog.version>
         <graylog.plugin-dir>/usr/share/graylog-server/plugin</graylog.plugin-dir>
+        <com.mycila:license-maven-plugin.version>2.11
+        </com.mycila:license-maven-plugin.version>
     </properties>
 
     <dependencies>
@@ -151,9 +153,9 @@
             <plugin>
                 <groupId>com.mycila</groupId>
                 <artifactId>license-maven-plugin</artifactId>
-                <version>2.11</version>
+                <version>${com.mycila:license-maven-plugin.version}</version>
                 <configuration>
-                    <header>com/mycila/maven/plugin/license/templates/GPL-3.txt</header>
+                    <header>templates/GPL3.txt</header>
                     <properties>
                         <owner>Tom Saunders</owner>
                         <email>tom@paradoxic.al</email>
@@ -161,20 +163,30 @@
                     <excludes>
                         <exclude>**/pom.xml</exclude>
                         <exclude>LICENSE</exclude>
+                        <exclude>template/**</exclude>
                         <exclude>**/README.md</exclude>
                         <exclude>src/deb/**</exclude>
                         <exclude>src/test/resources/**</exclude>
                         <exclude>src/main/resources/**</exclude>
                     </excludes>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.mycila</groupId>
+                        <artifactId>license-maven-plugin-git</artifactId>
+                        <!-- make sure this is the same version as
+                        license-maven-plugin -->
+                        <version>${com.mycila:license-maven-plugin.version}</version>
+                    </dependency>
+                </dependencies>
                 <executions>
-                <execution>
-                    <id>check-license</id>
-                    <phase>verify</phase>
-                    <goals>
-                        <goal>check</goal>
-                    </goals>
-                </execution>
+                    <execution>
+                        <id>check-license</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>
