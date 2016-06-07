@@ -18,9 +18,71 @@
  */
 package al.paradoxic.graylog.sflow.input;
 
+import al.paradoxic.graylog.sflow.input.codec.SFlowCodec;
+import com.codahale.metrics.MetricRegistry;
+import com.google.inject.assistedinject.Assisted;
+
+import org.graylog2.inputs.transports.UdpTransport;
+import org.graylog2.plugin.LocalMetricRegistry;
+import org.graylog2.plugin.ServerStatus;
+import org.graylog2.plugin.configuration.Configuration;
+import org.graylog2.plugin.inputs.MessageInput;
+import org.graylog2.plugin.inputs.codecs.Codec;
+import org.graylog2.plugin.inputs.transports.Transport;
+
+import javax.inject.Inject;
+
 /**
  * This is the plugin. Your class should implement one of the existing plugin
  * interfaces. (i.e. AlarmCallback, MessageInput, MessageOutput)
  */
-public class SFlowInput {
+public class SFlowInput extends MessageInput
+{
+
+    @Inject
+    public SFlowInput(@Assisted Configuration configuration,
+                      UdpTransport.Factory transportFactory,
+                      SFlowCodec.Factory codecFactory,
+                      Config config,
+                      Descriptor descriptor,
+                      MetricRegistry metricRegistry,
+                      LocalMetricRegistry localRegistry,
+                      ServerStatus serverStatus)
+    {
+        super(metricRegistry,
+              configuration,
+              transportFactory.create(configuration),
+              localRegistry,
+              codecFactory.create(configuration),
+              config,
+              descriptor,
+              serverStatus);
+    }
+
+    @FactoryClass
+    public interface Factory extends MessageInput.Factory<SFlowInput> {
+        @Override
+        SFlowInput create(Configuration configuration);
+
+        @Override
+        Config getConfig();
+
+        @Override
+        Descriptor getDescriptor();
+    }
+
+    public static class Descriptor extends MessageInput.Descriptor {
+        @Inject
+        public Descriptor() {
+            super(NAME, false, "");
+        }
+    }
+
+    @ConfigClass
+    public static class Config extends MessageInput.Config {
+        @Inject
+        public Config(UdpTransport.Factory transport, NetFlowCodec.Factory codec) {
+            super(transport.getConfig(), codec.getConfig());
+        }
+    }
 }

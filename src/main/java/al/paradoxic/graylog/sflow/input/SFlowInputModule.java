@@ -21,6 +21,8 @@ package al.paradoxic.graylog.sflow.input;
 import org.graylog2.plugin.PluginConfigBean;
 import org.graylog2.plugin.PluginModule;
 
+import al.paradoxic.graylog.sflow.input.codec.SFlowCodec;
+
 import java.util.Collections;
 import java.util.Set;
 
@@ -40,23 +42,7 @@ public class SFlowInputModule extends PluginModule {
 
     @Override
     protected void configure() {
-        /*
-         * Register your plugin types here.
-         *
-         * Examples:
-         *
-         * addMessageInput(Class<? extends MessageInput>);
-         * addMessageFilter(Class<? extends MessageFilter>);
-         * addMessageOutput(Class<? extends MessageOutput>);
-         * addPeriodical(Class<? extends Periodical>);
-         * addAlarmCallback(Class<? extends AlarmCallback>);
-         * addInitializer(Class<? extends Service>);
-         * addRestResource(Class<? extends PluginRestResource>);
-         *
-         *
-         * Add all configuration beans returned by getConfigBeans():
-         *
-         * addConfigBeans();
-         */
+        addMessageInput(SFlowInput.class);
+        addCodec("sFlow", SFlowCodec.class);
     }
 }
