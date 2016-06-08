@@ -29,6 +29,8 @@ import org.graylog2.plugin.configuration.Configuration;
 import org.graylog2.plugin.inputs.MessageInput;
 import org.graylog2.plugin.inputs.codecs.Codec;
 import org.graylog2.plugin.inputs.transports.Transport;
+import org.graylog2.plugin.inputs.annotations.ConfigClass;
+import org.graylog2.plugin.inputs.annotations.FactoryClass;
 
 import javax.inject.Inject;
 
@@ -74,14 +76,14 @@ public class SFlowInput extends MessageInput
     public static class Descriptor extends MessageInput.Descriptor {
         @Inject
         public Descriptor() {
-            super(NAME, false, "");
+            super("sFlow input", false, "");
         }
     }
 
     @ConfigClass
     public static class Config extends MessageInput.Config {
         @Inject
-        public Config(UdpTransport.Factory transport, NetFlowCodec.Factory codec) {
+        public Config(UdpTransport.Factory transport, SFlowCodec.Factory codec) {
             super(transport.getConfig(), codec.getConfig());
         }
     }
