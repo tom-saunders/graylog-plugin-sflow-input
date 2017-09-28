@@ -1,3 +1,5 @@
+# This is not a functioning implementation and has fallen by the wayside.
+
 # SFlowInput Plugin for Graylog
 
 [![Build Status](https://travis-ci.org/tom-saunders/graylog-plugin-sflow-input.svg?branch=master)](https://travis-ci.org/tom-saunders/graylog-plugin-sflow-input)
